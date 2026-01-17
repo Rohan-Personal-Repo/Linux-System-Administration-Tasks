@@ -72,7 +72,7 @@ Linux-System-Administration/
 
 ### **1. Clone the Repository**
 ```bash
-git clone https://github.com/Rohan-Repo/Linux-System-Administration-Tasks.git
+git clone https://github.com/Rohan-Personal-Repo/Linux-System-Administration-Tasks.git
 cd Linux
 ```
 
