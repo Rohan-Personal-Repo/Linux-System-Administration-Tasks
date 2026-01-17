@@ -1,0 +1,46 @@
+1. Create a Sample Text File:
+
+$ cat MyData.txt
+Hello, World
+Thu Sep 18 09:56:49 AM EDT 2025
+Fri Sep 26 09:59:06 AM EDT 2025
+Wed Oct 15 11:46:26 PM KST 2025
+
+2. Encrypt file - symmetric encryption with a specific cipher (like AES256)
+(Accept Prompt and enter a password like pass1234)
+$ gpg --symmetric --cipher-algo AES256 MyData.txt
+
+3. This creates the GPG File:
+$ ls -la MyData*
+-rw-rw-r-- 1 admin admin 109 Oct 15 23:48 MyData.txt
+-rw-rw-r-- 1 admin admin 166 Oct 15 23:49 MyData.txt.gpg
+
+4. Why shred?
+a. rm only removes the filename; the data can still be recovered using a Data Recovery S/W
+b. shred overwrites the file multiple times with random data, then -u unlinks (deletes) it.
+c. Essential for sensitive files: ensures the original plaintext 
+cannot be recovered, leaving only the encrypted .gpg file.
+
+$ shred -u MyData.txt
+$ ls -la MyData*
+-rw-rw-r-- 1 admin admin 166 Oct 15 23:49 MyData.txt.gpg
+
+$ cat MyData.txt.gpg 
+Encrypted Garbled Data
+
+## File successfully Encrypted ##
+
+5. Decrypt file
+(Enter same password from Step 2 - pass1234)
+$ gpg -d MyData.txt.gpg >> DecyptedFile.txt
+gpg: AES256.CFB encrypted data
+gpg: encrypted with 1 passphrase
+
+6. Check Contents:
+$ cat DecyptedFile.txt 
+Hello, World
+Thu Sep 18 09:56:49 AM EDT 2025
+Fri Sep 26 09:59:06 AM EDT 2025
+Wed Oct 15 11:46:26 PM KST 2025
+
+## File successfully Decrypted ##
